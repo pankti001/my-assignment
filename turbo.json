@@ -9,7 +9,10 @@
       "env": [
         "CLERK_SECRET_KEY",
         "DATABASE_URL",
-        "VITE_CLERK_PUBLISHABLE_KEY"
+        "VITE_CLERK_PUBLISHABLE_KEY",
+        "GOOGLE_CLIENT_ID",
+        "GOOGLE_CLIENT_SECRET",
+        "AUTH_SECRET"
       ]
     },
     "lint": {
