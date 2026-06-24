@@ -22,6 +22,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
     }
   }
 });
-console.log("GOOGLE_CLIENT_ID =", !!GOOGLE_CLIENT_ID);
-console.log("GOOGLE_CLIENT_SECRET =", !!GOOGLE_CLIENT_SECRET);
-console.log("AUTH_SECRET =", !!AUTH_SECRET);
+console.log("VERCEL AUTH CHECK");
+console.log("ID:", !!GOOGLE_CLIENT_ID);
+console.log("SECRET:", !!GOOGLE_CLIENT_SECRET);
+console.log("AUTH_SECRET:", !!AUTH_SECRET);
