@@ -38,6 +38,9 @@
       loading = false;
     }
   }
+  function googleLogin() {
+    window.location.href = "/auth/signin";
+}
 </script>
 
 <div class="min-h-screen flex items-center justify-center bg-slate-100 p-4">
@@ -138,10 +141,17 @@
         Sign in
       {/if}
     </button>
+    <button
+	onclick={googleLogin}
+	class="w-full mt-3 border border-slate-300 bg-white text-slate-800 font-medium text-sm py-2.5 rounded-xl"
+>
+	Continue with Google
+</button>
 
     <p class="text-center text-xs text-slate-500 mt-5">
       No account? <a href="/signup" class="text-blue-600 hover:underline">Create one</a>
     </p>
+
 
   </div>
 </div>

@@ -1,24 +1,27 @@
-export const handle = async ({ event, resolve }) => {
-	const session = event.cookies.get('session');
+// export const handle = async ({ event, resolve }) => {
+// 	const session = event.cookies.get('session');
 
-	const protectedRoutes = [
-		'/dashboard',
-		'/resume',
-		'/graph'
-	];
+// 	const protectedRoutes = [
+// 		'/dashboard',
+// 		'/resume',
+// 		'/graph'
+// 	];
 
-	const isProtected = protectedRoutes.some((route) =>
-		event.url.pathname.startsWith(route)
-	);
+// 	const isProtected = protectedRoutes.some((route) =>
+// 		event.url.pathname.startsWith(route)
+// 	);
 
-	if (isProtected && !session) {
-		return new Response(null, {
-			status: 302,
-			headers: {
-				location: '/login'
-			}
-		});
-	}
+// 	if (isProtected && !session) {
+// 		return new Response(null, {
+// 			status: 302,
+// 			headers: {
+// 				location: '/login'
+// 			}
+// 		});
+// 	}
 
-	return resolve(event);
-};
+// 	return resolve(event);
+// };
+import { handle as authHandle } from "./auth";
+
+export const handle = authHandle;
