@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { goto } from '$app/navigation';
+
   let name = $state('');
   let email = $state('');
   let password = $state('');
@@ -18,10 +20,10 @@
     if (/[0-9]/.test(password)) score++;
     if (/[^A-Za-z0-9]/.test(password)) score++;
     const map = [
-      { label: 'Very weak', color: '#E24B4A', width: '20%' },
-      { label: 'Weak',      color: '#E24B4A', width: '40%' },
-      { label: 'Fair',      color: '#EF9F27', width: '60%' },
-      { label: 'Strong',    color: '#1D9E75', width: '80%' },
+      { label: 'Very weak',   color: '#E24B4A', width: '20%'  },
+      { label: 'Weak',        color: '#E24B4A', width: '40%'  },
+      { label: 'Fair',        color: '#EF9F27', width: '60%'  },
+      { label: 'Strong',      color: '#1D9E75', width: '80%'  },
       { label: 'Very strong', color: '#0F6E56', width: '100%' },
     ];
     return map[Math.max(0, score - 1)];
@@ -49,6 +51,9 @@
       const result = await response.json();
       if (result.success) {
         success = true;
+        // Brief pause so the user sees the success banner, then redirect to login
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        goto('/login');
       } else {
         error = result.message ?? 'Something went wrong. Try again.';
       }
@@ -93,7 +98,7 @@
           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
           <polyline points="22 4 12 14.01 9 11.01"/>
         </svg>
-        Account created! Redirecting…
+        Account created! Redirecting to login…
       </div>
     {/if}
 
@@ -177,7 +182,7 @@
 
     <button
       onclick={signup}
-      disabled={loading}
+      disabled={loading || success}
       class="w-full bg-slate-900 hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed
              text-white font-medium text-sm py-2.5 rounded-xl transition flex items-center justify-center gap-2"
     >
@@ -187,6 +192,8 @@
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
         </svg>
         Creating account…
+      {:else if success}
+        Redirecting…
       {:else}
         Create account
       {/if}
