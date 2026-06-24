@@ -20,10 +20,23 @@
 		nodes = nodes.filter((n) => n.id !== id);
 	}
 
+	// async function logout() {
+	// 	await fetch('/api/logout', { method: 'POST' });
+	// 	goto('/login');
+	// }
 	async function logout() {
-		await fetch('/api/logout', { method: 'POST' });
-		goto('/login');
+	try {
+		const response = await fetch('/api/logout', {
+			method: 'POST'
+		});
+
+		if (response.ok) {
+			window.location.href = '/login';
+		}
+	} catch (error) {
+		console.error('Logout failed:', error);
 	}
+}
 
 	function pad(i: number) {
 		return String(i + 1).padStart(3, '0');

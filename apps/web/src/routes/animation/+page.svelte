@@ -3,10 +3,23 @@
 	import { OrbitControls } from '@threlte/extras';
 	import { goto } from '$app/navigation';
 
+	// async function logout() {
+	// 	await fetch('/api/logout', { method: 'POST' });
+	// 	goto('/login');
+	// }
 	async function logout() {
-		await fetch('/api/logout', { method: 'POST' });
-		goto('/login');
+	try {
+		const response = await fetch('/api/logout', {
+			method: 'POST'
+		});
+
+		if (response.ok) {
+			window.location.href = '/login';
+		}
+	} catch (error) {
+		console.error('Logout failed:', error);
 	}
+}
 
 	let autoRotate = $state(true);
 	let wireframe   = $state(false);
