@@ -17,15 +17,15 @@
     checked = true;
   });
 
-  // $effect(() => {
-  //   if (!checked) return;
-  //   const isPublic = PUBLIC_ROUTES.includes($page.url.pathname);
-  //   if ($user === null && !isPublic) {
-  //     goto('/login');
-  //   } else if ($user !== null && isPublic) {
-  //     goto('/dashboard');
-  //   }
-  // });
+  $effect(() => {
+    if (!checked) return;
+    const isPublic = PUBLIC_ROUTES.includes($page.url.pathname);
+    if ($user === null && !isPublic) {
+      goto('/login');
+    } else if ($user !== null && isPublic) {
+      goto('/dashboard');
+    }
+  });
 </script>
 
 <svelte:head>
