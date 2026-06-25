@@ -74,10 +74,10 @@ export async function POST({ request, url }) {
 	`
 });
 
-		return json({
+	return json({
 	success: true,
 	message:
-		'If an account with that email exists, a password reset link has been sent.'
+		'Password reset link sent successfully! Please check your email and click the link to reset your password.'
 });
 
 	} catch (error) {
