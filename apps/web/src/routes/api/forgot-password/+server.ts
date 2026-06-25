@@ -1,10 +1,16 @@
 import { json } from '@sveltejs/kit';
 import { sql } from '$lib/server/db';
-import { Resend } from 'resend';
 import { randomUUID } from 'crypto';
-import { RESEND_API_KEY } from '$env/static/private';
+import nodemailer from 'nodemailer';
+import { EMAIL_USER, EMAIL_PASS } from '$env/static/private';
 
-const resend = new Resend(RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth: {
+		user: EMAIL_USER,
+		pass: EMAIL_PASS
+	}
+});
 
 export async function POST({ request, url }) {
 	try {
@@ -42,28 +48,32 @@ export async function POST({ request, url }) {
 
 		const resetLink = `${url.origin}/reset-password?token=${token}`;
 
-		await resend.emails.send({
-			from: 'onboarding@resend.dev',
-			to: email,
-			subject: 'Reset Your Password',
-			html: `
-				<h2>Password Reset</h2>
+		await transporter.sendMail({
+	from: `"Assignment Dashboard" <${EMAIL_USER}>`,
+	to: email,
+	subject: 'Reset Your Password',
+	html: `
+		<h2>Password Reset</h2>
 
-				<p>Hello,</p>
+		<p>Hello,</p>
 
-				<p>You requested to reset your password.</p>
+		<p>You requested to reset your password.</p>
 
-				<p>
-					<a href="${resetLink}">
-						Click here to reset your password
-					</a>
-				</p>
+		<p>
+			Click the link below to reset your password:
+		</p>
 
-				<p>This link expires in 15 minutes.</p>
+		<p>
+			<a href="${resetLink}">
+				Reset Password
+			</a>
+		</p>
 
-				<p>If you didn't request this, please ignore this email.</p>
-			`
-		});
+		<p>This link expires in <b>15 minutes</b>.</p>
+
+		<p>If you didn't request this, you can safely ignore this email.</p>
+	`
+});
 
 		return json({
 	success: true,
