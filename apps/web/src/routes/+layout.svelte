@@ -8,7 +8,14 @@
 
   let { children } = $props();
 
-  const PUBLIC_ROUTES = ['/login', '/signup', '/forgot-password'];
+  // const PUBLIC_ROUTES = ['/login', '/signup', '/forgot-password'];
+
+  const PUBLIC_ROUTES = [
+	'/login',
+	'/signup',
+	'/forgot-password',
+	'/reset-password'
+];
 
   let checked = $state(false);
 

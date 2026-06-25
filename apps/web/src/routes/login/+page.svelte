@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
-
   let email = $state('');
   let password = $state('');
   let showPassword = $state(false);
@@ -9,7 +7,7 @@
 
   function validate(): string {
     if (!email.trim()) return 'Enter your email address.';
-    if (!email.includes('@')) return 'That doesn\'t look like a valid email.';
+    if (!email.includes('@')) return "That doesn't look like a valid email.";
     if (!password) return 'Enter your password.';
     return '';
   }
@@ -43,6 +41,7 @@
 <div class="min-h-screen flex items-center justify-center bg-slate-100 p-4">
   <div class="bg-white rounded-2xl border border-slate-200 p-10 w-full max-w-sm">
 
+    <!-- Icon -->
     <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center mb-5">
       <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-600" viewBox="0 0 24 24"
         fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
@@ -54,18 +53,23 @@
     <h1 class="text-xl font-medium text-slate-900 mb-1">Welcome back</h1>
     <p class="text-sm text-slate-500 mb-6">Sign in to your account</p>
 
+    <!-- Error banner -->
     {#if error}
       <div class="flex items-center gap-2 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl px-4 py-3 mb-5">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 shrink-0" viewBox="0 0 24 24"
           fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/>
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
           <line x1="12" y1="16" x2="12.01" y2="16"/>
         </svg>
         {error}
       </div>
     {/if}
 
-    <div class="space-y-4 mb-6">
+    <!-- Fields -->
+    <div class="flex flex-col gap-3.5 mb-5">
+
+      <!-- Email -->
       <div>
         <label for="email" class="block text-xs font-medium text-slate-600 mb-1.5">Email</label>
         <input
@@ -73,27 +77,28 @@
           bind:value={email}
           type="email"
           placeholder="you@example.com"
-          autocomplete="off"
-          readonly
-          onfocus={(e) => (e.currentTarget as HTMLInputElement).removeAttribute('readonly')}
-          class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm text-slate-900
+          autocomplete="email"
+          class="w-full h-10 border border-slate-200 rounded-xl px-3.5 text-sm text-slate-900
                  placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500
                  focus:border-transparent transition"
         />
       </div>
 
+      <!-- Password -->
       <div>
+        <div class="flex items-center justify-between mb-1.5">
+          <label for="password" class="text-xs font-medium text-slate-600">Password</label>
+          <a href="/forgot-password" class="text-xs text-blue-600 hover:underline">Forgot password?</a>
+        </div>
         <div class="relative">
           <input
             id="password"
             bind:value={password}
             type={showPassword ? 'text' : 'password'}
             placeholder="••••••••"
-            autocomplete="new-password"
-            readonly
-            onfocus={(e) => (e.currentTarget as HTMLInputElement).removeAttribute('readonly')}
+            autocomplete="current-password"
             onkeydown={(e) => e.key === 'Enter' && login()}
-            class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 pr-11 text-sm text-slate-900
+            class="w-full h-10 border border-slate-200 rounded-xl px-3.5 pr-11 text-sm text-slate-900
                    placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500
                    focus:border-transparent transition"
           />
@@ -120,8 +125,10 @@
           </button>
         </div>
       </div>
+
     </div>
 
+    <!-- Submit -->
     <button
       onclick={login}
       disabled={loading}
@@ -139,9 +146,11 @@
       {/if}
     </button>
 
-    <p class="text-center text-xs text-slate-500 mt-5">
-      No account? <a href="/signup" class="text-blue-600 hover:underline">Create one</a>
-    </p>
+    <div class="border-t border-slate-100 mt-6 pt-5">
+      <p class="text-center text-xs text-slate-500">
+        No account? <a href="/signup" class="text-blue-600 hover:underline">Create one</a>
+      </p>
+    </div>
 
   </div>
 </div>
