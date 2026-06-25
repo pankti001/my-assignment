@@ -26,9 +26,8 @@ export async function POST({ request, url }) {
 		// Don't reveal whether the email exists
 		if (users.length === 0) {
 	return json({
-		success: true,
-		message:
-			'If an account with that email exists, a password reset link has been sent.'
+		success: false,
+		message: 'No account found with this email. Please create an account first.'
 	});
 }
 
